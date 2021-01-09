@@ -4,7 +4,7 @@
 const int MAX_ELEM_PILA=6;
 
 struct Tpila{
-	int tam;
+	int bolasXPila;
 	int vector[MAX_ELEM_PILA];
 	int ocupadas;
 };

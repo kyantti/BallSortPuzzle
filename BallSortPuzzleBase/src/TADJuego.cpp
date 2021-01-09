@@ -6,28 +6,24 @@ using namespace std;
 
 void iniciar(Juego &j) {
 	//Se leen los datos del fichero conf y se le pasan al TADTablero
-	int pilas, pilasSin, bolasXPila, puntos;
-	int deDonde=0;
-	int m[12][12];
-	if (entornoCargarConfiguracion(pilas, pilasSin, bolasXPila, deDonde, puntos,m) == true){
-		iniciar_tablero(j.tab, pilas, pilasSin, bolasXPila, m);
-		j.puntuacion=puntos;
+	if (entornoCargarConfiguracion(j.tab.pilas, j.tab.pilasSin, j.tab.bolasXPila, j.deDonde, j.puntuacion,j.tab.m)){
+		iniciar_tablero(j.tab, j.tab.pilas, j.tab.pilasSin,  j.tab.bolasXPila, j.tab.m);
 	}
 }
 void grafico(Juego &j) {
 	int fil, color, col;
-	int m[12][12];
 	//Se abre la ventana gráfica con un número de pilas igual a pilas+pilasSin
-	entornoIniciar(j.tab.ocupadas + j.tab.pilasSin);
+	entornoIniciar(j.tab.pilas + j.tab.pilasSin);
 	//Se pintan todas las pilas con espacio para almacenar un número de bolas igual a bolasXPila
-	for (fil = 0; fil < j.tab.ocupadas + j.tab.pilasSin; fil++) {
+	for (fil = 0; fil < j.tab.pilas + j.tab.pilasSin; fil++) {
 		entornoPintarPila(fil, j.tab.bolasXPila);
 	}
 	//Las primeras pilas (tantas como indica la variable "pilas") se llenan obedeciendo al fichero conf (pero me salen del reves) idk
-	for (fil = 0; fil < j.tab.ocupadas; fil++) {
+	for (fil = 0; fil < j.tab.pilas; fil++) {
 		for (col = 0; col< j.tab.bolasXPila; col++) {
-			color= m[j.tab.bolasXPila-fil-1][col];
-			entornoPonerBola(fil, color, col, j.tab.bolasXPila);
+			color= j.tab.m[fil][col];
+			apilar_tablero(j.tab, color, fil);
+			entornoPonerBola(fil, color, (j.tab.bolasXPila-1)-col, j.tab.bolasXPila);
 		}
 	}
 	entornoMarcarPosicion(j.tab.ocupadas);
@@ -45,7 +41,8 @@ void jugar(Juego &j) {
 	int bolasPila=j.tab.bolasXPila; //indica el numero de bolas que se puede almacenar en cada uno de los tubos (pilas)
 
 	//valor inicial de las variables
-	pcursor = 1; //inicialmente el tubo seleccionado es el tubo 1 (posicion 1 del vector tablero)
+
+	pcursor = 0; //inicialmente el tubo seleccionado es el tubo 1 (posicion 1 del vector tablero)
 	tuboActivado = 0; //al comienzo del juego ningun tubo esta activado
 	salir = false;
 
@@ -110,7 +107,7 @@ void jugar(Juego &j) {
 			break;
 		case TDerecha:
 			entornoDesmarcarPosicion(pcursor);
-			if (pcursor < (pcursor + pilasSin) - 1)
+			if (pcursor < (j.tab.pilas + j.tab.pilasSin) - 1)
 				pcursor++;
 			else
 				pcursor = 0;
@@ -121,7 +118,7 @@ void jugar(Juego &j) {
 			if (pcursor > 0)
 				pcursor--;
 			else
-				pcursor = (pcursor + pilasSin) - 1;
+				pcursor = (j.tab.pilas + j.tab.pilasSin) - 1;
 			entornoMarcarPosicion (pcursor);
 			break;
 		case TF1:

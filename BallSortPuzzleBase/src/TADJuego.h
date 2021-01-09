@@ -7,6 +7,7 @@
 struct Juego{
 	Tablero tab;
 	int puntuacion;
+	int deDonde;
 };
 /*
   * PRE:  { }

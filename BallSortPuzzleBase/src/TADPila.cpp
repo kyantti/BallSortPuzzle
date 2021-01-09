@@ -14,7 +14,7 @@ bool estaVacia(Tpila p) {
 
 bool estaLlena(Tpila p) {
 	bool llena = false;
-	if (p.ocupadas == p.tam) {
+	if (p.ocupadas == p.bolasXPila) {
 		llena = !llena;
 	}
 	return llena;
@@ -22,7 +22,7 @@ bool estaLlena(Tpila p) {
 
 void apilar(Tpila &p, int dato) {
 	if (estaLlena(p)==false) {
-		p.vector[p.ocupadas] = dato;
+		p.vector[(p.bolasXPila-1)-p.ocupadas] = dato;
 		p.ocupadas = p.ocupadas + 1;
 	}
 }
@@ -48,8 +48,8 @@ int cuantos(Tpila p) {
 bool mismoColor_pila(Tpila p) {
 	bool mismo = true;
 	int i, aux;
-	i = p.tam;
-	aux = p.tam - 1;
+	i = p.bolasXPila;
+	aux = p.bolasXPila - 1;
 	while (i >= 0) {
 		if (p.vector[i] == p.vector[aux]) {
 			i--;

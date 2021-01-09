@@ -2,32 +2,32 @@
 
 //Mismas operaciones del TADPila, pero para un pila en concreto; se utilizaran en otras funciones de este TAD
 
-void crearPila_tablero(Tablero &t, int pos) {
-	crearPila(t.vector[pos]);
+void crearPila_tablero(Tablero &t, int pila) {
+	crearPila(t.vector[pila]);
 }
 
-bool estaVacia_tablero(Tablero &t, int pos) {
-	return estaVacia(t.vector[pos-1]);
+bool estaVacia_tablero(Tablero &t, int pila) {
+	return estaVacia(t.vector[pila]);
 }
 
-bool estaLlena_tablero(Tablero &t, int pos) {
-	return estaLlena(t.vector[pos]);
+bool estaLlena_tablero(Tablero &t, int pila) {
+	return estaLlena(t.vector[pila]);
 }
 
-void apilar_tablero(Tablero &t, int dato, int pos) {
-	return apilar(t.vector[pos-1], dato);
+void apilar_tablero(Tablero &t, int dato, int pila) {
+	return apilar(t.vector[pila], dato);
 }
 
-void desapilar_tablero(Tablero &t, int pos) {
-	desapilar(t.vector[pos-1]);
+void desapilar_tablero(Tablero &t, int pila) {
+	desapilar(t.vector[pila]);
 }
 
-int cima_tablero(Tablero &t, int pos) {
-	return cima(t.vector[pos-1]);
+int cima_tablero(Tablero &t, int pila) {
+	return cima(t.vector[pila]);
 }
 
-int cuantos_tablero(Tablero &t, int pos) {
-	return cuantos(t.vector[pos-1]);
+int cuantos_tablero(Tablero &t, int pila) {
+	return cuantos(t.vector[pila]);
 }
 
 //Operaciones propias del TADTablero
@@ -63,23 +63,17 @@ bool mismo_color_tablero(Tablero t) {
 
 //Esta funcion inicia el tablero EN LA MEMORIA (pone los tubos con bolas, los tubos sin bolas,
 //dice las bolas que hay en cada pila y nos da la matriz con los colores y tal
-void iniciar_tablero(Tablero &t, int pilas, int pilasSin, int bolasXpila, int m[][12]) {
-	int fil, col, dato;
-	//crea las pilas del tablero (pone ocupadas a 0)
-	for (fil = 0; fil <= pilas+ pilasSin; fil++) {
-			crearPila_tablero(t, fil);
+void iniciar_tablero(Tablero &t, int pilas, int pilasSin, int bolasXpila, int m[12][12]) {
+	int i, j;
+	for(i=0; i<pilas+pilasSin; i++){
+		crearPila(t.vector[i]);
 	}
-	//pone en el struct tablero el numero de pilas que hay en total, las ocupadas y las bolas por cada pila
-	t.bolasXPila = bolasXpila;
-	t.ocupadas = pilas;
-	t.pilasSin= pilasSin;
-	t.tot_pilas=t.ocupadas + t.pilasSin;
-	//pone los datos de la matriz en las pilas (pero parece que estan del reves)
-	for (fil = 0; fil < t.ocupadas; fil++) {
-		for (col =t.bolasXPila ; col > 0; col--) {
-			dato = m[fil][col];
-			apilar_tablero(t, dato, col);
-
+	t.pilas=pilas;
+	t.pilasSin=pilasSin;
+	for(i=0; i< t.pilas; i++){
+		t.vector[i].bolasXPila=bolasXpila;
+		for(j=t.bolasXPila; j>0; j--){
+			m[i][j]=t.m[i][j];
 		}
 	}
 }

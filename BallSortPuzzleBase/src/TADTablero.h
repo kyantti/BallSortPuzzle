@@ -11,9 +11,11 @@ const int MIN_TUBOS=4;
 struct Tablero{
 	tubo vector[MAX_TUBOS];
 	int tot_pilas;
+	int pilasSin;
+	int pilas;
 	int ocupadas;
 	int bolasXPila;
-	int pilasSin;
+	int m[12][12];
 };
 /*
   * PRE:  { }
@@ -32,31 +34,31 @@ int numero_pilas(Tablero &t);
   * POST: { Inicia la pila p vacía}
   * Complejidad:
   */
-void crearPila_tablero (Tablero &t, int pos);
+void crearPila_tablero (Tablero &t, int pila);
 /*
   * PRE:  { }
   * POST: { Inicia la pila p vacía}
   * Complejidad:
   */
-bool estaVacia_tablero(Tablero &t, int pos );
+bool estaVacia_tablero(Tablero &t, int pila );
 /*
   * PRE:  { }
   * POST: { Inicia la pila p vacía}
   * Complejidad:
   */
-bool estaLlena_tablero(Tablero &t, int pos);
+bool estaLlena_tablero(Tablero &t, int pila);
 /*
   * PRE:  { }
   * POST: { Inicia la pila p vacía}
   * Complejidad:
   */
-void apilar_tablero (Tablero &t, int dato, int pos);
+void apilar_tablero (Tablero &t, int dato, int pila);
 /*
   * PRE:  { }
   * POST: { Inicia la pila p vacía}
   * Complejidad:
   */
-void desapilar_tablero (Tablero &t, int pos);
+void desapilar_tablero (Tablero &t, int pila);
 /*
   * PRE:  { }
   * POST: { Inicia la pila p vacía}
@@ -68,7 +70,7 @@ int cima_tablero (Tablero &t, int pos);
   * POST: { Inicia la pila p vacía}
   * Complejidad:
   */
-int cuantos_tablero (Tablero &t, int pos);
+int cuantos_tablero (Tablero &t, int pila);
 /*
   * PRE:  { }
   * POST: { Inicia la pila p vacía}
@@ -81,6 +83,7 @@ bool cabe_dentro(Tablero t, int dato, int pila);
   * Complejidad:
   */
 bool mismo_color_tablero(Tablero t);
+
 
 #endif /* TABLERO_H_ */
 
